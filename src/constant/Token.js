@@ -1,0 +1,5 @@
+export const JWT = {
+    ACCESS_TOKEN_EXPIRED: 86400, 
+    REFRESH_TOKEN_EXPIRED: 86400 * 90, 
+  };
+  
