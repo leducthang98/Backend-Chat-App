@@ -11,16 +11,19 @@ export const controllerHandler = f => async (req, res, next) => {
 
 export const errorHandler = (error, req, res, next) => {
   if (typeof error === 'string') {
-    res.status(500).json({
-      code: -1,
-      message: error
+
+    const errorObject = findErrorObject(error)
+    
+    res.status(errorObject.status || 500).json({
+      code: errorObject.code,
+      message: errorObject.message
     });
 
     logger.error(error);
   } else {
     const errorObject = findErrorObject(error.message)
 
-    res.status(errorObject.status || 400).send({
+    res.status(errorObject.status || 500).send({
       code: errorObject.code,
       message: errorObject.message
     });

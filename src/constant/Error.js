@@ -23,5 +23,10 @@ export const error = {
         code: 4,
         message: 'Username or password incorrect',
         status: 401
+    },
+    UNAUTHORIZED: {
+        code: 5,
+        message: 'Unauthorized',
+        status: 401
     }
 }
