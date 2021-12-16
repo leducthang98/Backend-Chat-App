@@ -5,7 +5,7 @@ import { loginController, signUpController } from './AuthController';
 const path = '/auth';
 const router = Router();
 
-router.get('/sign-up', controllerHandler(signUpController));
-router.get('/login', controllerHandler(loginController));
+router.post('/sign-up', controllerHandler(signUpController));
+router.post('/login', controllerHandler(loginController));
 
 export default { path, router };
