@@ -1,6 +1,21 @@
 version: '3.1'
 
 services:
+  app:
+    container_name: app
+    build: ./
+    ports:
+      - 3333:3333
+    environment:
+      - MONGODB_URL=mongodb://root:password@mongo:27017/admin
+      - PORT=3333
+      - JWT_SECRET=leducthang98
+    depends_on:
+      - mongo
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
   mongo:
     image: mongo
     container_name: mongodb
