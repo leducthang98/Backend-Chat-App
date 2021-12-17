@@ -1,11 +1,15 @@
-import socketIo from 'socket.io';
+import { Server } from 'socket.io';
 import { HttpApp } from './Http';
 
 export const SocketApp = (function () {
     var instance;
 
     function createInstance() {
-        var object = socketIo(HttpApp.getInstance());
+        var object = new Server(HttpApp.getInstance(), {
+            cors: {
+                origin: '*'
+            }
+        })
         return object;
     }
 

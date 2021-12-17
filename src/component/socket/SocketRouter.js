@@ -3,15 +3,11 @@ import { SocketApp } from '../../singleton/Socket';
 
 SocketApp.getInstance().on('connection', (socket) => {
     console.log('new connection')
-    socket.on('health_check', (data) => {
-        console.log(data)
+
+    socket.on('disconnect',()=>{
+        console.log('disconnected')
     })
 })
-
-setInterval(() => {
-    SocketApp.getInstance().emit('health_check', 'ok')
-}, 5000)
-
 
 // socket.emit('message', "this is a test"); //sending to sender-client only
 // socket.broadcast.emit('message', "this is a test"); //sending to all clients except sender
