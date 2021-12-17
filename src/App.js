@@ -2,11 +2,15 @@ import { corsMiddleware } from './middleware/Cors';
 import { ExpressApp } from './singleton/Express';
 import { HttpApp } from './singleton/Http';
 import bodyParser from 'body-parser';
-import routers from './component/router';
+import routers from './component/rest/RestRouter';
 import express from 'express';
 import path from 'path';
 import { logger } from './util/Logger';
 import { errorHandler } from './middleware/ErrorHandler';
+
+// import code
+require('./util/NosqlDatabase')
+require('./component/socket/SocketRouter')
 
 ExpressApp.getInstance().use(corsMiddleware)
 ExpressApp.getInstance().use(bodyParser.json({ limit: '50mb' }));

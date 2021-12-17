@@ -1,7 +1,7 @@
-import { validatePassword } from "../../util/Validation"
-import { error } from '../../constant/Error'
+import { validatePassword } from "../../../util/Validation"
+import { error } from '../../../constant/Error'
 import { loginService, signUpService } from "./AuthService"
-import { commonResponse } from "../../util/ResponseForm"
+import { commonResponse } from "../../../util/ResponseForm"
 
 export const signUpController = async (req, res) => {
     const { username, password } = req.body

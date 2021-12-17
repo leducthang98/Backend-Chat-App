@@ -1,4 +1,4 @@
-import { commonResponse } from "../../util/ResponseForm"
+import { commonResponse } from "../../../util/ResponseForm"
 import { getAllUsersService } from "./UserService"
 
 export const getAllUsersController = async (req, res) => {

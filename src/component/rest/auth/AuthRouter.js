@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { controllerHandler } from '../../middleware/ErrorHandler';
+import { controllerHandler } from '../../../middleware/ErrorHandler';
 import { loginController, signUpController } from './AuthController';
 
 const path = '/auth';
