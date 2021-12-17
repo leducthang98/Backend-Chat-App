@@ -1,14 +1,14 @@
-import { Server } from 'socket.io';
+import socketIo from 'socket.io';
 import { HttpApp } from './Http';
 
 export const SocketApp = (function () {
     var instance;
- 
+
     function createInstance() {
-        var object = new Server(HttpApp.getInstance())
+        var object = socketIo(HttpApp.getInstance());
         return object;
     }
- 
+
     return {
         getInstance: function () {
             if (!instance) {
