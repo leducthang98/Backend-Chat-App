@@ -29,5 +29,5 @@ for (const router of routers) {
 ExpressApp.getInstance().use(errorHandler);
 
 HttpApp.getInstance().listen(process.env.PORT, () => {
-    logger.info(`Server is running at http://localhost:${process.env.PORT}`);
+    logger.info(`server is running at http://localhost:${process.env.PORT}`);
 });

@@ -24,3 +24,9 @@ export const setSocketUserPair = async (userId, socketId) => {
     const resp = await redisConnection.set(redisUserIdKey, socketId)
     return resp
 }
+
+export const delSocketUserPair = async (userId) => {
+    const redisUserIdKey = REDIS_SOCKET_USER_KEY_PREFIX + userId
+    const resp = await redisConnection.del(redisUserIdKey, socketId)
+    return resp
+}

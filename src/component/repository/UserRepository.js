@@ -1,12 +1,8 @@
 import { User } from '../model/User';
 
 export const getAllUserRepository = async () => {
-    try {
         const users = await User.find({}, { password: 0 });
         return users
-    } catch (e) {
-        throw e
-    }
 };
 
 export const isUserExistRepository = async (username) => {
