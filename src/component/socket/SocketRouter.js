@@ -1,13 +1,29 @@
-import { HttpApp } from '../../singleton/Http';
+
 import { SocketApp } from '../../singleton/Socket';
+import * as JwtUtil from '../../util/Jwt'
+
+SocketApp.getInstance().use(async (socket, next) => {
+    try {
+        const token = socket.handshake.auth.token
+        const tokenDecoded = await JwtUtil.verifyToken(token)
+        socket.tokenDecoded = tokenDecoded;
+        next();
+    } catch (error) {
+        next(error)
+    }
+})
 
 SocketApp.getInstance().on('connection', (socket) => {
     console.log('new connection')
 
-    socket.on('disconnect',()=>{
+    socket.on('disconnect', () => {
         console.log('disconnected')
     })
 })
+
+
+// Map (socketId, user)
+// userId - [socketID1]
 
 // socket.emit('message', "this is a test"); //sending to sender-client only
 // socket.broadcast.emit('message', "this is a test"); //sending to all clients except sender

@@ -3,7 +3,7 @@ import { Router } from 'express';
 const path = '';
 const router = Router();
 
-router.get('/healthcheck', (req, res) => {
+router.get('/health-check', async (req, res) => {
   res.send('ok');
 });
 

@@ -10,6 +10,7 @@ import { errorHandler } from './middleware/ErrorHandler';
 
 // import code
 require('./util/NosqlDatabase')
+require('./util/Redis')
 require('./component/socket/SocketRouter')
 
 ExpressApp.getInstance().use(corsMiddleware)

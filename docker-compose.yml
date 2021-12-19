@@ -39,3 +39,12 @@ services:
       - ME_CONFIG_MONGODB_URL=mongodb://root:password@mongo:27017/
     depends_on:
       - mongo
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    command: redis-server --requirepass password
+    volumes:
+      - './data-redis:/data'
+    ports:
+      - "6379:6379"
