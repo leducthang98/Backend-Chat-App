@@ -1,4 +1,4 @@
-import { getAllUserRepository, getUserByUserIdRepository } from "./UserRepository"
+import { getAllUserRepository, getUserByUserIdRepository } from "../../repository/UserRepository"
 
 export const getAllUsersService = async () => {
     const users = await getAllUserRepository()

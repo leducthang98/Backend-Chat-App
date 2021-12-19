@@ -2,7 +2,7 @@ import { error } from "../../../constant/Error"
 import { JWT } from "../../../constant/Token";
 import { compare, hash } from "../../../util/Bcrypt"
 import * as jwtUtil from '../../../util/Jwt';
-import { getUserByUsernameRepository, isUserExistRepository, signUpUserRepository } from "../user/UserRepository"
+import { getUserByUsernameRepository, isUserExistRepository, signUpUserRepository } from "../../repository/UserRepository"
 
 export const signUpService = async (username, password) => {
     const isUserExist = await isUserExistRepository(username)
