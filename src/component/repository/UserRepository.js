@@ -14,7 +14,7 @@ export const isUserExistRepository = async (username) => {
 }
 
 export const getUserByUsernameRepository = async (username) => {
-    const user = await User.findOne({ username: username }, { password: 0 })
+    const user = await User.findOne({ username: username })
     return user
 }
 
