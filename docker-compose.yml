@@ -13,8 +13,10 @@ services:
       - REDIS_PASSWORD=password 
       - REDIS_PORT=6379
       - REDIS_HOST=redis
+      - REDIS_URL=redis://default:password@redis:6379
     depends_on:
       - mongo
+      - redis
     volumes:
       - type: bind
         source: ./
@@ -43,7 +45,7 @@ services:
     depends_on:
       - mongo
   redis:
-    image: redis:alpine
+    image: redis
     container_name: redis
     restart: always
     command: redis-server --requirepass password

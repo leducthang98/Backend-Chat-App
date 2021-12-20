@@ -2,10 +2,8 @@ import { createClient } from 'redis';
 import { REDIS_SOCKET_USER_KEY_PREFIX } from '../constant/Common';
 
 export const redisConnection = createClient({
-    port: process.env.REDIS_PORT,
-    host: process.env.REDIS_HOST,
-    password: process.env.REDIS_PASSWORD
-})
+    url: process.env.REDIS_URL
+  });
 
 redisConnection.connect()
 
