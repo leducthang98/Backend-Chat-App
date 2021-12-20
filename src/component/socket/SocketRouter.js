@@ -2,7 +2,7 @@
 import { logger } from '../../util/Logger';
 import { SocketApp } from '../../singleton/Socket';
 import * as JwtUtil from '../../util/Jwt'
-import { delSocketUserPair, setSocketUserPair, getSocketIdByUserId } from '../../util/Redis';
+import { delSocketUserPair, setSocketUserPair, getSocketIdByUserId } from '../../config/Redis';
 import { createRoom } from '../repository/RoomRepository';
 import { ENUM } from '../../constant/Enum';
 import { createManyRoomParticipants, getAllParticipantInRoom } from '../repository/RoomParticipantRepository';
@@ -42,7 +42,7 @@ SocketApp.getInstance().on('connection', async (socket) => {
         for (const userId of userIds) {
             const socketId = await getSocketIdByUserId(userId)
             if (socketId) {
-                SocketApp.getInstance().to(socketId).emit('server-new-message', genMessage(senderId, roomId, content, message.created_at, messageType))
+                SocketApp.getInstance().to(socketId).emit('server-new-message', genMessage(senderId, roomId, content, message.created_at, type))
             } else {
                 // notification
             }

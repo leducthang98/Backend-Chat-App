@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { logger } from './Logger';
+import { logger } from '../util/Logger';
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true });
 

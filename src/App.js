@@ -9,8 +9,8 @@ import { logger } from './util/Logger';
 import { errorHandler } from './middleware/ErrorHandler';
 
 // import code
-require('./util/NosqlDatabase')
-require('./util/Redis')
+require('./config/NosqlDatabase')
+require('./config/Redis')
 require('./component/socket/SocketRouter')
 
 ExpressApp.getInstance().use(corsMiddleware)
