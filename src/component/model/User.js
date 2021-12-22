@@ -8,6 +8,6 @@ const user = new mongoose.Schema({
     avatar: String,
     email: { type: String, lowercase: true },
     is_active: { type: Boolean, default: false },
-});
+}, { timestamps: true });
 
 export const User = mongoose.model('User', user);

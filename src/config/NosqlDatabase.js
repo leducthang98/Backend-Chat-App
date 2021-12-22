@@ -12,4 +12,19 @@ db.once('open', function () {
     logger.info('mongo_connect_success', process.env.MONGODB_URL);
 });
 
+export const executeTransaction = async (f) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    try {
+        const response = await f(session);
+        await session.commitTransaction();
+        session.endSession();
+        return response
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        throw error;
+    }
+}
+
 export default db;

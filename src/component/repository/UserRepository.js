@@ -1,8 +1,10 @@
+import { isValidObjectId } from 'mongoose';
+import { error } from '../../constant/Error';
 import { User } from '../model/User';
 
 export const getAllUserRepository = async () => {
-        const users = await User.find({}, { password: 0 });
-        return users
+    const users = await User.find({}, { password: 0 });
+    return users
 };
 
 export const isUserExistRepository = async (username) => {
@@ -19,7 +21,10 @@ export const getUserByUsernameRepository = async (username) => {
 }
 
 export const getUserByUserIdRepository = async (id) => {
-    const user = await User.findOne({ id: id }, { password: 0 })
+    if (!isValidObjectId(id)) {
+        throw new Error(error.INVALID_INPUT_PARAM.message)
+    }
+    const user = await User.findOne({ _id: id }, { password: 0 })
     return user
 }
 
@@ -30,4 +35,3 @@ export const signUpUserRepository = async (username, password) => {
     })
     return user
 }
-

@@ -1,5 +1,6 @@
 import { error } from '../constant/Error';
 import * as jwtUtil from '../util/Jwt';
+import { logger } from '../util/Logger';
 
 export const authMiddleware = async (req, res, next) => {
     const { authorization } = req.headers;
@@ -10,9 +11,12 @@ export const authMiddleware = async (req, res, next) => {
                 const tokenDecoded = await jwtUtil.verifyToken(token)
                 req.tokenDecoded = tokenDecoded;
                 next();
-            } catch (error) {
-                next(error)
+            } catch (e) {
+                logger.error(e)
+                next(error.TOKEN_INVALID.message)
             }
+        } else {
+            next(error.UNAUTHORIZED.message)
         }
     } else {
         next(error.UNAUTHORIZED.message)

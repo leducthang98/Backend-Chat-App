@@ -5,8 +5,7 @@ const message = new mongoose.Schema({
     sender_id: String,
     content: String,
     type: String,
-    created_at: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 
 export const Message = mongoose.model('Message', message);
 

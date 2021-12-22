@@ -1,7 +1,7 @@
 export const error = {
     UNKNOWN_ERROR: {
         code: 9999,
-        message: 'Unknown error.',
+        message: 'Server error.',
         status: 500
     },
     INVALID_PASSWORD: {
@@ -28,5 +28,15 @@ export const error = {
         code: 5,
         message: 'Unauthorized',
         status: 401
-    }
+    },
+    TOKEN_INVALID: {
+        code: 6,
+        message: 'Invalid token',
+        status: 401
+    },
+    USER_NOT_EXIST: {
+        code: 7,
+        message: 'User not exist.',
+        status: 400
+    },
 }
