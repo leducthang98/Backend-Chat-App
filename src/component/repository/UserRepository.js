@@ -24,7 +24,7 @@ export const getUserByUserIdRepository = async (id) => {
     if (!isValidObjectId(id)) {
         throw new Error(error.INVALID_INPUT_PARAM.message)
     }
-    const user = await User.findOne({ _id: id }, { password: 0 })
+    const user = await User.findOne({ _id: id }, { password: 0, __v: 0 })
     return user
 }
 

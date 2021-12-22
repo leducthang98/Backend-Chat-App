@@ -7,7 +7,7 @@ export const getAllUsersController = async (req, res) => {
 }
 
 export const getMeController = async (req, res) => {
-    const userId = req.tokenDecoded
+    const { userId } = req.tokenDecoded
     const me = await getUserByUserIdService(userId)
     res.send(commonResponse(me))
 }
