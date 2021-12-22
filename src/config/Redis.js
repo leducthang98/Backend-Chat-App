@@ -1,14 +1,15 @@
 import { createClient } from 'redis';
 import { REDIS_SOCKET_USER_KEY_PREFIX } from '../constant/Common';
+import { logger } from '../util/Logger';
 
 export const redisConnection = createClient({
     url: process.env.REDIS_URL
-  });
+});
 
 redisConnection.connect()
 
 redisConnection.on('error', (err) => {
-    console.log("Redis-error " + err);
+    logger.error("Redis-error " + err);
 });
 
 export const getSocketIdByUserId = async (userId) => {
