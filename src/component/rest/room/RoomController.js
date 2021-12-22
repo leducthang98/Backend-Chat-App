@@ -1,5 +1,5 @@
 import { error } from "../../../constant/Error"
-import { createRoomService, getAllRoomService } from "./RoomService"
+import { createRoomService, getAllRoomService, getChatDataInRoomService } from "./RoomService"
 import { commonResponse } from "../../../util/ResponseForm"
 
 export const createRoomController = async (req, res) => {
@@ -14,5 +14,12 @@ export const createRoomController = async (req, res) => {
 
 export const getAllRoomsController = async (req, res) => {
     const response = await getAllRoomService()
+    res.send(commonResponse(response))
+}
+
+export const getChatDataInRoomController = async (req, res) => {
+    const roomId = req.params.id
+    const lastMessageTimeStamp = req.query.timestamp
+    const response = await getChatDataInRoomService(roomId, lastMessageTimeStamp)
     res.send(commonResponse(response))
 }

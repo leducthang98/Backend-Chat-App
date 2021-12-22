@@ -5,6 +5,7 @@ import { RoomParticipant } from "../../model/RoomParticipant"
 import { getUserByUserIdRepository } from "../../repository/UserRepository"
 import { getAllRoomRepository } from "../../repository/RoomRepository"
 import { getAllParticipantInRoom } from "../../repository/RoomParticipantRepository"
+import { getMessageByRoomIdWithPagination } from "../../repository/MessageRepository"
 
 export const createRoomService = async (userIds) => {
     // let response = await executeTransaction(async (session) => {
@@ -55,9 +56,13 @@ export const getAllRoomService = async () => {
         let room = data[i]._doc
         let roomId = room._id
         const userIds = await getAllParticipantInRoom(roomId)
-
         delete room.__v
         room.userIds = userIds
     }
     return data
+}
+
+export const getChatDataInRoomService = async (roomId, lastMessageTimeStamp) => {
+    const messages = await getMessageByRoomIdWithPagination(roomId, lastMessageTimeStamp)
+    return messages
 }

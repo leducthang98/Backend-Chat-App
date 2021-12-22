@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { Message } from '../../model/Message';
 
 const path = '';
 const router = Router();

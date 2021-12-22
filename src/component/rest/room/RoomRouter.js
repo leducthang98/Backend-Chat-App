@@ -8,5 +8,6 @@ const router = Router();
 
 router.post('/create', authMiddleware, controllerHandler(roomController.createRoomController));
 router.get('/all', authMiddleware, controllerHandler(roomController.getAllRoomsController));
+router.get('/:id/chat-data', authMiddleware, controllerHandler(roomController.getChatDataInRoomController));
 
 export default { path, router };
