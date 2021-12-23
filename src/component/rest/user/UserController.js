@@ -11,3 +11,9 @@ export const getMeController = async (req, res) => {
     const me = await getUserByUserIdService(userId)
     res.send(commonResponse(me))
 }
+
+export const getUserByUserIdController = async (req, res) => {
+    const userId = req.params.id
+    const user = await getUserByUserIdService(userId)
+    res.send(commonResponse(user))
+}

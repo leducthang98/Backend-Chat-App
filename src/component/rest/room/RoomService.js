@@ -3,7 +3,7 @@ import { error } from "../../../constant/Error"
 import { Room } from "../../model/Room"
 import { RoomParticipant } from "../../model/RoomParticipant"
 import { getUserByUserIdRepository } from "../../repository/UserRepository"
-import { getAllRoomRepository } from "../../repository/RoomRepository"
+import { getAllRoomRepository, getMyRoomRepository } from "../../repository/RoomRepository"
 import { getAllParticipantInRoom } from "../../repository/RoomParticipantRepository"
 import { getMessageByRoomIdWithPagination } from "../../repository/MessageRepository"
 
@@ -49,8 +49,8 @@ export const createRoomService = async (userIds) => {
     return response
 }
 
-export const getAllRoomService = async () => {
-    const rooms = await getAllRoomRepository()
+export const getMyRoomService = async (userId) => {
+    const rooms = await getMyRoomRepository(userId)
     let data = rooms
     for (let i = 0; i < data.length; i++) {
         let room = data[i]._doc

@@ -8,5 +8,6 @@ const router = Router();
 
 router.get('/all', authMiddleware, controllerHandler(userController.getAllUsersController));
 router.get('/me', authMiddleware, controllerHandler(userController.getMeController));
+router.get('/:id', authMiddleware, controllerHandler(userController.getUserByUserIdController));
 
 export default { path, router };
