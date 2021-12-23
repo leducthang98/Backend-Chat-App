@@ -57,7 +57,14 @@ export const getMyRoomService = async (userId) => {
         let roomId = room._id
         const userIds = await getAllParticipantInRoom(roomId)
         delete room.__v
-        room.userIds = userIds
+
+        let users = []
+        for (const userId of userIds) {
+            const user = await getUserByUserIdRepository(userId)
+            users.push(user)
+        }
+        room.users = users
+
     }
     return data
 }
