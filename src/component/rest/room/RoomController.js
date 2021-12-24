@@ -4,11 +4,12 @@ import { commonResponse } from "../../../util/ResponseForm"
 
 export const createRoomController = async (req, res) => {
     const { userIds } = req.body
-    if (userIds < 2) {
+    const { userId } = req.tokenDecoded
+    if (userIds.length === 0) {
         throw new Error(error.INVALID_INPUT_PARAM.message)
     }
 
-    const response = await createRoomService(userIds)
+    const response = await createRoomService([...userIds, userId])
     res.send(commonResponse(response))
 }
 
