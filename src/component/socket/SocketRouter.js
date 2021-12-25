@@ -30,21 +30,21 @@ SocketApp.getInstance().on('connection', async (socket) => {
         socket.on('client-new-message', async (data) => {
             try {
                 const { roomId, senderId, receiversId, content, type } = data
-
-                if (!roomId && receiversId && receiversId.length) {
+                let userRoomId = roomId
+                if (!userRoomId && receiversId && receiversId.length) {
                     const room = await createRoomRepository(null, null, receiversId.length === 1 ? ENUM.ROOM_TYPE.PAIR : ENUM.ROOM_TYPE.GROUP)
                     await createManyRoomParticipants([senderId, ...receiversId], room.id)
-                    roomId = room.id
+                    userRoomId = room.id
                 }
 
-                const message = await createMessage(roomId, senderId, content, type)
+                const message = await createMessage(userRoomId, senderId, content, type)
 
-                const userIds = await getAllParticipantInRoom(roomId)
+                const userIds = await getAllParticipantInRoom(userRoomId)
 
                 for (const userId of userIds) {
                     const socketId = await getSocketIdByUserId(userId)
                     if (socketId) {
-                        SocketApp.getInstance().to(socketId).emit('server-new-message', genMessage(senderId, roomId, content, message.createdAt, type, senderId == userId))
+                        SocketApp.getInstance().to(socketId).emit('server-new-message', genMessage(senderId, userRoomId, content, message.createdAt, type, senderId == userId))
                     } else {
                         // notification
                     }
