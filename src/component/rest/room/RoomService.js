@@ -72,7 +72,7 @@ export const getMyRoomService = async (userId) => {
 export const getChatDataInRoomService = async (roomId, lastMessageTimeStamp) => {
     const messages = await getMessageByRoomIdWithPagination(roomId, lastMessageTimeStamp)
     let data = []
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < messages.length; i++) {
         let message = messages[i]._doc
         let senderId = message.sender_id
         delete message.sender_id
