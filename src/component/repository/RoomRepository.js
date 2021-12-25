@@ -19,7 +19,6 @@ export const getMyRoomRepository = async (userId) => {
     const roomParticipants = await RoomParticipant.find({
         user_id: userId
     })
-    
     if (!roomParticipants.length) {
         return []
     }
@@ -27,10 +26,9 @@ export const getMyRoomRepository = async (userId) => {
     const roomIds = roomParticipants.map((e) => {
         return e.room_id
     })
-
     const rooms = await Room.find({
         _id: {
-            $all: roomIds
+            $in: roomIds
         }
     })
     return rooms
