@@ -69,7 +69,7 @@ export const getMyRoomService = async (userId) => {
     return data
 }
 
-export const getChatDataInRoomService = async (roomId, lastMessageTimeStamp) => {
+export const getChatDataInRoomService = async (roomId, lastMessageTimeStamp, userId) => {
     const messages = await getMessageByRoomIdWithPagination(roomId, lastMessageTimeStamp)
     let data = []
     for (let i = 0; i < messages.length; i++) {
@@ -78,6 +78,7 @@ export const getChatDataInRoomService = async (roomId, lastMessageTimeStamp) => 
         delete message.sender_id
         const user = await getUserByUserIdRepository(senderId)
         message.sender = user
+        message.isMyMessage = (userId == senderId)
         data.push(message)
     }
     return data

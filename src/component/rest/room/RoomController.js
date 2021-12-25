@@ -22,6 +22,7 @@ export const getMyRoomsController = async (req, res) => {
 export const getChatDataInRoomController = async (req, res) => {
     const roomId = req.params.id
     const lastMessageTimeStamp = req.query.timestamp
-    const response = await getChatDataInRoomService(roomId, lastMessageTimeStamp)
+    const { userId } = req.tokenDecoded
+    const response = await getChatDataInRoomService(roomId, lastMessageTimeStamp, userId)
     res.send(commonResponse(response))
 }
