@@ -3,7 +3,7 @@ import { logger } from '../../util/Logger';
 import { SocketApp } from '../../singleton/Socket';
 import * as JwtUtil from '../../util/Jwt'
 import { delSocketUserPair, setSocketUserPair, getSocketIdByUserId } from '../../config/Redis';
-import { createRoom } from '../repository/RoomRepository';
+import { createRoomRepository } from '../repository/RoomRepository';
 import { ENUM } from '../../constant/Enum';
 import { createManyRoomParticipants, getAllParticipantInRoom } from '../repository/RoomParticipantRepository';
 import { createMessage } from '../repository/MessageRepository';
@@ -31,7 +31,7 @@ SocketApp.getInstance().on('connection', async (socket) => {
             const { roomId, senderId, receiversId, content, type } = data
 
             if (!roomId && receiversId && receiversId.length) {
-                const room = await createRoom(null, null, receiversId.length === 1 ? ENUM.ROOM_TYPE.PAIR : ENUM.ROOM_TYPE.GROUP)
+                const room = await createRoomRepository(null, null, receiversId.length === 1 ? ENUM.ROOM_TYPE.PAIR : ENUM.ROOM_TYPE.GROUP)
                 await createManyRoomParticipants([senderId, ...receiversId], room.id)
                 roomId = room.id
             }
