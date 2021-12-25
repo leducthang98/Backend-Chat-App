@@ -1,9 +1,10 @@
-export const genMessage = (senderId, roomId, content, createdAt, type) => {
+export const genMessage = (senderId, roomId, content, createdAt, type, isMyMessage) => {
     return {
         senderId: senderId,
         roomId: roomId,
         content: content,
         type: type,
-        createdAt: createdAt
+        createdAt: createdAt,
+        isMyMessage: isMyMessage
     }
 }
