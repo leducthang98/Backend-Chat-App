@@ -43,7 +43,7 @@ SocketApp.getInstance().on('connection', async (socket) => {
             for (const userId of userIds) {
                 const socketId = await getSocketIdByUserId(userId)
                 if (socketId) {
-                    SocketApp.getInstance().to(socketId).emit('server-new-message', genMessage(senderId, roomId, content, message.created_at, type))
+                    SocketApp.getInstance().to(socketId).emit('server-new-message', genMessage(senderId, roomId, content, message.createdAt, type))
                 } else {
                     // notification
                 }
