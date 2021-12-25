@@ -28,25 +28,29 @@ SocketApp.getInstance().on('connection', async (socket) => {
         await setSocketUserPair(userId, socket.id)
 
         socket.on('client-new-message', async (data) => {
-            const { roomId, senderId, receiversId, content, type } = data
+            try {
+                const { roomId, senderId, receiversId, content, type } = data
 
-            if (!roomId && receiversId && receiversId.length) {
-                const room = await createRoomRepository(null, null, receiversId.length === 1 ? ENUM.ROOM_TYPE.PAIR : ENUM.ROOM_TYPE.GROUP)
-                await createManyRoomParticipants([senderId, ...receiversId], room.id)
-                roomId = room.id
-            }
-
-            const message = await createMessage(roomId, senderId, content, type)
-
-            const userIds = await getAllParticipantInRoom(roomId)
-
-            for (const userId of userIds) {
-                const socketId = await getSocketIdByUserId(userId)
-                if (socketId) {
-                    SocketApp.getInstance().to(socketId).emit('server-new-message', genMessage(senderId, roomId, content, message.createdAt, type))
-                } else {
-                    // notification
+                if (!roomId && receiversId && receiversId.length) {
+                    const room = await createRoomRepository(null, null, receiversId.length === 1 ? ENUM.ROOM_TYPE.PAIR : ENUM.ROOM_TYPE.GROUP)
+                    await createManyRoomParticipants([senderId, ...receiversId], room.id)
+                    roomId = room.id
                 }
+
+                const message = await createMessage(roomId, senderId, content, type)
+
+                const userIds = await getAllParticipantInRoom(roomId)
+
+                for (const userId of userIds) {
+                    const socketId = await getSocketIdByUserId(userId)
+                    if (socketId) {
+                        SocketApp.getInstance().to(socketId).emit('server-new-message', genMessage(senderId, roomId, content, message.createdAt, type))
+                    } else {
+                        // notification
+                    }
+                }
+            } catch (e) {
+                logger.error(e)
             }
         })
 
