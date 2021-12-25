@@ -21,37 +21,41 @@ SocketApp.getInstance().use(async (socket, next) => {
 })
 
 SocketApp.getInstance().on('connection', async (socket) => {
-    const { userId } = socket.tokenDecoded
-    logger.info(`socket connect, userId: ${userId}`)
+    try {
+        const { userId } = socket.tokenDecoded
+        logger.info(`socket connect, userId: ${userId}`)
 
-    await setSocketUserPair(userId, socket.id)
+        await setSocketUserPair(userId, socket.id)
 
-    socket.on('client-new-message', async (data) => {
-        const { roomId, senderId, receiversId, content, type } = data
+        socket.on('client-new-message', async (data) => {
+            const { roomId, senderId, receiversId, content, type } = data
 
-        if (!roomId && receiversId && receiversId.length) {
-            const room = await createRoom(null, null, receiversId.length === 1 ? ENUM.ROOM_TYPE.PAIR : ENUM.ROOM_TYPE.GROUP)
-            await createManyRoomParticipants([senderId, ...receiversId], room.id)
-            roomId = room.id
-        }
-
-        const message = await createMessage(roomId, senderId, content, type)
-
-        const userIds = await getAllParticipantInRoom(roomId) 
-
-        for (const userId of userIds) {
-            const socketId = await getSocketIdByUserId(userId)
-            if (socketId) {
-                SocketApp.getInstance().to(socketId).emit('server-new-message', genMessage(senderId, roomId, content, message.created_at, type))
-            } else {
-                // notification
+            if (!roomId && receiversId && receiversId.length) {
+                const room = await createRoom(null, null, receiversId.length === 1 ? ENUM.ROOM_TYPE.PAIR : ENUM.ROOM_TYPE.GROUP)
+                await createManyRoomParticipants([senderId, ...receiversId], room.id)
+                roomId = room.id
             }
-        }
-    })
 
-    socket.on('disconnect', () => {
-        logger.info(`socket disconnect, userId: ${userId}`)
-        delSocketUserPair(userId)
-    })
+            const message = await createMessage(roomId, senderId, content, type)
+
+            const userIds = await getAllParticipantInRoom(roomId)
+
+            for (const userId of userIds) {
+                const socketId = await getSocketIdByUserId(userId)
+                if (socketId) {
+                    SocketApp.getInstance().to(socketId).emit('server-new-message', genMessage(senderId, roomId, content, message.created_at, type))
+                } else {
+                    // notification
+                }
+            }
+        })
+
+        socket.on('disconnect', () => {
+            logger.info(`socket disconnect, userId: ${userId}`)
+            delSocketUserPair(userId)
+        })
+    } catch (e) {
+        logger.error(e)
+    }
 })
 
