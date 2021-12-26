@@ -30,6 +30,10 @@ export const getMyRoomRepository = async (userId) => {
         _id: {
             $in: roomIds
         }
-    })
+    }).sort({ updatedAt: -1 })
     return rooms
+}
+
+export const updateLastMessageInRoomRepository = async (roomId, message) => {
+    await Room.updateOne({ _id: roomId }, { last_message: message });
 }

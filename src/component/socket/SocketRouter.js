@@ -3,7 +3,7 @@ import { logger } from '../../util/Logger';
 import { SocketApp } from '../../singleton/Socket';
 import * as JwtUtil from '../../util/Jwt'
 import { delSocketUserPair, setSocketUserPair, getSocketIdByUserId } from '../../config/Redis';
-import { createRoomRepository } from '../repository/RoomRepository';
+import { createRoomRepository, updateLastMessageInRoomRepository } from '../repository/RoomRepository';
 import { ENUM } from '../../constant/Enum';
 import { createManyRoomParticipants, getAllParticipantInRoom } from '../repository/RoomParticipantRepository';
 import { createMessage } from '../repository/MessageRepository';
@@ -38,6 +38,9 @@ SocketApp.getInstance().on('connection', async (socket) => {
                 }
 
                 const message = await createMessage(userRoomId, senderId, content, type)
+
+                // update lastmessage in room
+                updateLastMessageInRoomRepository(userRoomId, type === ENUM.MESSAGE_TYPE.MESSAGE ? content : 'media sent')
 
                 const userIds = await getAllParticipantInRoom(userRoomId)
 

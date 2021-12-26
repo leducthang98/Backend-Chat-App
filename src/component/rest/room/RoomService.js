@@ -83,3 +83,16 @@ export const getChatDataInRoomService = async (roomId, lastMessageTimeStamp, use
     }
     return data
 }
+
+export const getAllParticipantInRoomService = async (roomId, userId) => {
+    const userIds = await getAllParticipantInRoom(roomId)
+    if (!userIds.includes(userId)) {
+        throw new Error(error.PERMISSION_DENY.message)
+    }
+    const usersInfo = []
+    for (const id of userIds) {
+        const userData = await getUserByUserIdRepository(id)
+        usersInfo.push(userData._doc)
+    }
+    return usersInfo
+}

@@ -39,4 +39,9 @@ export const error = {
         message: 'User not exist.',
         status: 400
     },
+    PERMISSION_DENY: {
+        code: 8,
+        message: 'Permission denied',
+        status: 403
+    }
 }

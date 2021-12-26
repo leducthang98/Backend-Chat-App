@@ -9,5 +9,6 @@ const router = Router();
 router.post('/create', authMiddleware, controllerHandler(roomController.createRoomController));
 router.get('/me', authMiddleware, controllerHandler(roomController.getMyRoomsController));
 router.get('/:id/chat-data', authMiddleware, controllerHandler(roomController.getChatDataInRoomController));
+router.get('/:id/participants', authMiddleware, controllerHandler(roomController.getAllParticipantInRoomController))
 
 export default { path, router };
