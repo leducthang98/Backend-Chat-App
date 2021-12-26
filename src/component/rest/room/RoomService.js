@@ -70,6 +70,10 @@ export const getMyRoomService = async (userId) => {
 }
 
 export const getChatDataInRoomService = async (roomId, lastMessageTimeStamp, userId) => {
+    const userIds = await getAllParticipantInRoom(roomId)
+    if (!userIds.includes(userId)) {
+        throw new Error(error.PERMISSION_DENY.message)
+    }
     const messages = await getMessageByRoomIdWithPagination(roomId, lastMessageTimeStamp)
     let data = []
     for (let i = 0; i < messages.length; i++) {
