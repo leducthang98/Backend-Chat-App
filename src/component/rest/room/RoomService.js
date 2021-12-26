@@ -76,8 +76,7 @@ export const getChatDataInRoomService = async (roomId, lastMessageTimeStamp, use
         let message = messages[i]._doc
         let senderId = message.sender_id
         delete message.sender_id
-        const user = await getUserByUserIdRepository(senderId)
-        message.sender = user
+        message.senderId = senderId
         message.isMyMessage = (userId == senderId)
         data.push(message)
     }
